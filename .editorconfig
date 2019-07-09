@@ -1,0 +1,20 @@
+root = true
+
+[*.{adoc,bat,groovy,html,java,js,jsp,kt,kts,md,properties,py,rb,sh,sql,svg,txt,xml,xsd}]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+
+[*.{groovy,java,kt,kts}]
+indent_style = space
+indent_size = 4
+continuation_indent_size = 8
+tab_size = 4
+translate_tabs_to_spaces = true
+
+[*.{xml,xsd}]
+indent_style = space
+indent_size = 2
+continuation_indent_size = 2
+tab_size = 2
+translate_tabs_to_spaces = true

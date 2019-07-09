@@ -1,0 +1,10 @@
+ext.moduleName='kitty-aop'
+
+dependencies {
+    compile libraries.spring_aop
+
+    testCompile libraries.spring_boot_log
+    testCompile libraries.spring_boot_aop
+    testCompile libraries.spring_boot_test
+    
+}

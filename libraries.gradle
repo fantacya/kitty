@@ -1,0 +1,43 @@
+// Allows centralized definition of the version of artifacts to
+// use.  In that respect it serves a role similar to <dependencyManagement> in Maven
+ext {
+    junitVersion = '4.12'
+    slf4jVersion = '1.7.26'
+    mockitoVersion = '2.25.1'
+    springVersion = '5.1.6.RELEASE'
+    springBootVersion = '1.5.20.RELEASE'
+    springBoot2Version = '2.1.4.RELEASE'
+    hibernateValidatorVersion = '6.0.16.Final'
+
+    libraries = [
+            slf4j: "org.slf4j:slf4j-api:${slf4jVersion}",
+            junit: "junit:junit:${junitVersion}",
+            mockito: "org.mockito:mockito-core:${mockitoVersion}",
+
+            // spring
+            spring_core: "org.springframework:spring-core:${springVersion}",
+            spring_context: "org.springframework:spring-context:${springVersion}",
+            spring_aop: "org.springframework:spring-aop:${springVersion}",
+            spring_test:  "org.springframework:spring-test:${springVersion}",
+
+            // Spring Boot addon
+            spring_boot_log: "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}",
+            spring_boot_aop: "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}",
+            spring_boot_actuator: "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",
+            spring_boot_web: "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+            spring_boot_test:  "org.springframework.boot:spring-boot-starter-test:${springBootVersion}",
+            spring_boot_autoconfig : "org.springframework.boot:spring-boot-autoconfigure:${springBootVersion}",
+
+            // Spring Boot2 addon
+            spring_boot2_log: "org.springframework.boot:spring-boot-starter-logging:${springBoot2Version}",
+            spring_boot2_aop: "org.springframework.boot:spring-boot-starter-aop:${springBoot2Version}",
+            spring_boot2_actuator: "org.springframework.boot:spring-boot-starter-actuator:${springBoot2Version}",
+            spring_boot2_web: "org.springframework.boot:spring-boot-starter-web:${springBoot2Version}",
+            spring_boot2_test:  "org.springframework.boot:spring-boot-starter-test:${springBoot2Version}",
+            spring_boot2_autoconfig : "org.springframework.boot:spring-boot-autoconfigure:${springBoot2Version}",
+
+            // Hibernate validator addon
+            hibernate_validator: "org.hibernate.validator:hibernate-validator:${hibernateValidatorVersion}",
+    ]
+
+}

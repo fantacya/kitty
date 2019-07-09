@@ -1,0 +1,110 @@
+plugins {
+    id "org.sonarqube" version "2.7"
+    id "me.champeau.gradle.jmh" version "0.4.8"
+    id 'org.asciidoctor.convert' version '1.6.0'
+}
+apply plugin: 'idea'
+apply from: "${rootDir}/libraries.gradle"
+
+ext {
+    releaseVersion = '0.0.1'
+}
+
+allprojects {
+    apply plugin: 'jacoco'
+    apply plugin: 'me.champeau.gradle.jmh'
+
+    version '0.0.1-SNAPSHOT'
+    group 'com.fantacya.kitty'
+    description = 'common java library for fantacya projects'
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+}
+
+ext {
+    coreProjects = subprojects.findAll {
+        p -> !p.name.contains("documentation") && !p.name.endsWith("-bom")
+    }
+}
+
+configure(project.coreProjects) {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'jacoco'
+
+    dependencies {
+        compile ( libraries.slf4j)
+
+        // JSR-305 only used for non-required meta-annotations
+        compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+
+        testCompile ( libraries.junit)
+        testCompile ( libraries.mockito)
+    }
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+        options.deprecation = true
+        options.encoding = 'UTF-8'
+        options.compilerArgs += ["-Xlint:unchecked", "-parameters"]
+
+    }
+
+    jmh {
+        duplicateClassesStrategy = 'warn'
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "kitty"
+        property "sonar.projectKey", "kitty"
+        property "sonar.links.homepage","https://github.com/fantacya/kitty"
+        property "sonar.links.ci","https://github.com/fantacya/kitty"
+        property "sonar.links.scm","https://github.com/fantacya/kitty"
+        property "sonar.links.issue","https://github.com/fantacya/kitty/issues"
+        property "sonar.language","java"
+    }
+}
+def allTestCoverageFile = "$buildDir/jacoco/allTestCoverage.exec"
+
+task jacocoMergeTest(type: JacocoMerge) {
+    destinationFile = file(allTestCoverageFile)
+    executionData = project.fileTree(dir: '.', include:'**/build/jacoco/test.exec')
+}
+
+task jacocoMerge(dependsOn: ['jacocoMergeTest']) {
+    // used to run the other merge tasks
+}
+
+subprojects {
+    sonarqube {
+        properties {
+            property "sonar.jacoco.reportPaths", allTestCoverageFile
+        }
+    }
+    afterEvaluate {
+        // exclude subprojects that don't produce a jar file or by design.
+        if(!project.name.equals('kitty-bom') && !project.name.equals('kitty-documentation')
+                && !project.name.equals('kitty-test') && !project.name.equals('kitty-common')) {
+            jar {
+                inputs.property('moduleName', moduleName)
+                manifest.attributes(
+                        'Automatic-Module-Name': moduleName
+                )
+            }
+        }
+    }
+}
+
+tasks.check.dependsOn tasks.jacocoTestReport
+
+
+test {
+    dependsOn(subprojects.test) // required by cobertura to aggregate report
+}
