@@ -73,7 +73,7 @@ public class DistributeLockAdvisor extends AbstractAnnotationMethodAdvisor<Distr
         if (throwable[0] != null) {
             throw throwable[0];
         }
-        return result;
+        return result[0];
     }
 
     private String getKey(Object object, Object[] args, Class clazz, Method method, String condition) {
