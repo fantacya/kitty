@@ -4,6 +4,8 @@ ext {
     junitVersion = '4.12'
     slf4jVersion = '1.7.26'
     mockitoVersion = '2.25.1'
+    curatorVersion = '4.2.0'
+    jetcdVersion = '0.3.0'
     springVersion = '5.1.6.RELEASE'
     springBootVersion = '1.5.20.RELEASE'
     springBoot2Version = '2.1.4.RELEASE'
@@ -14,6 +16,13 @@ ext {
             junit: "junit:junit:${junitVersion}",
             mockito: "org.mockito:mockito-core:${mockitoVersion}",
 
+            // zookeeper
+            curator_frameworker: "org.apache.curator:curator-framewor:${curatorVersion}k",
+            curator_recipes: "org.apache.curator:curator-recipes:${curatorVersion}",
+
+            // etcd
+            jetcd_core: "io.etcd:jetcd-core:${jetcdVersion}",
+
             // spring
             spring_core: "org.springframework:spring-core:${springVersion}",
             spring_context: "org.springframework:spring-context:${springVersion}",
@@ -21,6 +30,7 @@ ext {
             spring_test:  "org.springframework:spring-test:${springVersion}",
 
             // Spring Boot addon
+            spring_boot_redis: "org.springframework.boot:spring-boot-starter-data-redis:${springBoot2Version}",
             spring_boot_log: "org.springframework.boot:spring-boot-starter-logging:${springBootVersion}",
             spring_boot_aop: "org.springframework.boot:spring-boot-starter-aop:${springBootVersion}",
             spring_boot_actuator: "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}",

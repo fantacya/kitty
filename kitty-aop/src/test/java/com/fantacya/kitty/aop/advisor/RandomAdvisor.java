@@ -23,7 +23,7 @@ public class RandomAdvisor extends AbstractAnnotationMethodAdvisor<RandomAdvised
 
     public RandomAdvisor() {
         setAnnotationValidator((targetClass, method, annotation) -> {
-            if (Integer.class == method.getReturnType() || int.class == method.getReturnType()) {
+            if (Integer.class != method.getReturnType() && int.class != method.getReturnType()) {
                 throw new AnnotationValidateException(String.format("注解%s只可用在返回整数类型的方法上", annotation.annotationType()));
             }
         });

@@ -1,5 +1,8 @@
 ext.moduleName='kitty-distribute-lock'
 
 dependencies {
+    compileOnly libraries.spring_boot_redis
+    compileOnly libraries.curator_recipes
+    compileOnly libraries.jetcd_core
     compile project(':kitty-aop')
 }
