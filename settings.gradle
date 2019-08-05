@@ -7,4 +7,5 @@ include 'kitty-distribute-lock'
 include 'kitty-ratelimiter'
 include 'kitty-retry'
 include 'kitty-web'
+include 'kitty-concurrent'
 
