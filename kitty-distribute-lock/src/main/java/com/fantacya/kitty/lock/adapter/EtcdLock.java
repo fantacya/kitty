@@ -37,7 +37,7 @@ public class EtcdLock implements DistributeLock {
     }
 
     @Override
-    public boolean lock(int expireTime, int timeout) {
+    public boolean lock(int expireTime, int timeout, int retryInterval) {
         int seconds = (int) Math.ceil(expireTime / 1000.0);
         try {
             long leaseId = client.getLeaseClient().grant(seconds).get().getID();

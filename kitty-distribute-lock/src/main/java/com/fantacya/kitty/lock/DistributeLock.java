@@ -9,6 +9,8 @@ import java.util.function.Consumer;
  */
 public interface DistributeLock {
 
+    int DEFAULT_RETRY_TIMEOUT = 20;
+
     /**
      * 获取锁的key
      * @return
@@ -19,9 +21,20 @@ public interface DistributeLock {
      * 获取锁
      * @param expireTime 锁自动失效时长，单位：毫秒
      * @param timeout 获取锁操作超时时长，单位：毫秒
+     * @param retryInterval 重试时间间隔，单位：毫秒
      * @return 锁定成功时返回锁的戳记 <code>stamp</code>，用于释放锁。锁定失败时，返回null
      */
-    boolean lock(int expireTime, int timeout);
+    boolean lock(int expireTime, int timeout, int retryInterval);
+
+    /**
+     * 获取锁
+     * @param expireTime 锁自动失效时长，单位：毫秒
+     * @param timeout 获取锁操作超时时长，单位：毫秒
+     * @return
+     */
+    default boolean lock(int expireTime, int timeout) {
+        return lock(expireTime, timeout, DEFAULT_RETRY_TIMEOUT);
+    }
 
     /**
      * 释放锁

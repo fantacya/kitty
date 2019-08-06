@@ -35,7 +35,7 @@ public class ZookeeperLock implements DistributeLock {
     }
 
     @Override
-    public boolean lock(int expireTime, int timeout) {
+    public boolean lock(int expireTime, int timeout, int retryInterval) {
         try {
             boolean result = lock.acquire(timeout, TimeUnit.MILLISECONDS);
             if (result) {
